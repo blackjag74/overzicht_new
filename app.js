@@ -2412,10 +2412,15 @@ class FinancialDashboard {
          const unpaidAmount = transactions.filter(t => t.status === 'unpaid').reduce((sum, t) => sum + (t.amount || 0), 0);
          const completedCount = transactions.filter(t => t.status === 'completed' || t.status === 'paid').length;
          
-         document.getElementById('total-transactions').textContent = totalTransactions;
-         document.getElementById('total-amount').textContent = `€${totalAmount.toFixed(2)}`;
-         document.getElementById('unpaid-amount').textContent = `€${unpaidAmount.toFixed(2)}`;
-         document.getElementById('completed-count').textContent = completedCount;
+         const totalTransactionsEl = document.getElementById('total-transactions');
+         const totalAmountEl = document.getElementById('total-amount');
+         const unpaidAmountEl = document.getElementById('unpaid-amount');
+         const completedCountEl = document.getElementById('completed-count');
+         
+         if (totalTransactionsEl) totalTransactionsEl.textContent = totalTransactions;
+         if (totalAmountEl) totalAmountEl.textContent = `€${totalAmount.toFixed(2)}`;
+         if (unpaidAmountEl) unpaidAmountEl.textContent = `€${unpaidAmount.toFixed(2)}`;
+         if (completedCountEl) completedCountEl.textContent = completedCount;
      }
 
      setupTransactionFilters() {
