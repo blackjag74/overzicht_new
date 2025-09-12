@@ -304,8 +304,12 @@ class FinancialDashboard {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
+            console.log('Bills data received:', data); // Debug log
             this.data.bills = data.RegularAccounts || [];
-            this.renderBillsTable();
+            console.log('Bills array:', this.data.bills); // Debug log
+            // V2.1 - Updated to use separate table rendering functions
+            this.renderUnpaidBillsTable();
+            this.renderPaidBillsTable();
         } catch (error) {
             console.error('Error loading bills:', error);
             this.showToast('Error loading bills data', 'error');
@@ -335,7 +339,9 @@ class FinancialDashboard {
                 await this.updateDashboard();
                 break;
             case 'bills':
-                this.renderBillsTable();
+                // V2.1 - Updated to use separate table rendering functions
+            this.renderUnpaidBillsTable();
+            this.renderPaidBillsTable();
                 break;
             case 'tasks':
                 this.renderTasksTable();
@@ -747,11 +753,16 @@ class FinancialDashboard {
 
     renderUnpaidBillsTable() {
         const container = document.getElementById('unpaid-bills-table-body');
-        if (!container) return;
+        if (!container) {
+            console.log('Unpaid bills container not found!');
+            return;
+        }
 
-        const unpaidBills = this.data.bills.filter(bill => 
-            bill.Status !== 'Betaald' && bill.Status !== 'Paid'
-        );
+        const unpaidBills = this.data.bills.filter(bill => {
+            const status = bill.Status || bill.status || '';
+            return status !== 'Betaald' && status !== 'Paid' && status !== 'betaald' && status !== 'paid';
+        });
+        console.log('Unpaid bills:', unpaidBills);
 
         container.innerHTML = unpaidBills.map(bill => `
             <tr>
@@ -796,11 +807,16 @@ class FinancialDashboard {
 
     renderPaidBillsTable() {
         const container = document.getElementById('paid-bills-table-body');
-        if (!container) return;
+        if (!container) {
+            console.log('Paid bills container not found!');
+            return;
+        }
 
-        const paidBills = this.data.bills.filter(bill => 
-            bill.Status === 'Betaald' || bill.Status === 'Paid'
-        );
+        const paidBills = this.data.bills.filter(bill => {
+            const status = bill.Status || bill.status || '';
+            return status === 'Betaald' || status === 'Paid' || status === 'betaald' || status === 'paid';
+        });
+        console.log('Paid bills:', paidBills);
 
         container.innerHTML = paidBills.map(bill => `
             <tr>
@@ -1122,7 +1138,9 @@ class FinancialDashboard {
                 this.showToast('Bill updated successfully!', 'success');
                 window.closeModal();
                 await this.loadBills();
-                this.renderBillsTable();
+                // V2.1 - Updated to use separate table rendering functions
+                this.renderUnpaidBillsTable();
+                this.renderPaidBillsTable();
                 this.updateStats();
             } else {
                 throw new Error('Network response was not ok');
@@ -1213,7 +1231,9 @@ class FinancialDashboard {
             this.showToast('Bill added successfully', 'success');
             window.closeModal();
             await this.updateStats();
-            this.renderBillsTable();
+            // V2.1 - Updated to use separate table rendering functions
+            this.renderUnpaidBillsTable();
+            this.renderPaidBillsTable();
             this.updateDashboard();
             
             // In a real application, you would make the API call:
@@ -1478,7 +1498,9 @@ class FinancialDashboard {
 
     clearSearch() {
         // Reset to original data display
-        this.renderBillsTable();
+        // V2.1 - Updated to use separate table rendering functions
+        this.renderUnpaidBillsTable();
+        this.renderPaidBillsTable();
         this.renderTasksTable();
     }
 
@@ -1490,7 +1512,9 @@ class FinancialDashboard {
         this.data.bills = results.bills;
         this.data.tasks = results.tasks;
         
-        this.renderBillsTable();
+        // V2.1 - Updated to use separate table rendering functions
+        this.renderUnpaidBillsTable();
+        this.renderPaidBillsTable();
         this.renderTasksTable();
         
         // Restore original data

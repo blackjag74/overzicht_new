@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Test</title>
+</head>
+<body>
+    <h1>Database Connection Test</h1>
+    <button onclick="testDatabase()">Test Database Connection</button>
+    <div id="results"></div>
+
+    <script>
+        async function testDatabase() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<p>Testing database connection...</p>';
+            
+            try {
+                console.log('Fetching from get_rekeningen.php...');
+                const response = await fetch('get_rekeningen.php');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Data received:', data);
+                
+                resultsDiv.innerHTML = `
+                    <h2>Database Response:</h2>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                    <p>Number of bills: ${data.RegularAccounts ? data.RegularAccounts.length : 0}</p>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `
+                    <h2>Error:</h2>
+                    <p style="color: red;">${error.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
