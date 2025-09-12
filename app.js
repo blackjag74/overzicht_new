@@ -9,6 +9,7 @@ class FinancialDashboard {
             tasks: [],
             stats: {}
         };
+        this.unreadMailCount = 0;
         this.init();
     }
 
@@ -497,7 +498,7 @@ class FinancialDashboard {
         const pendingTasksCount = this.data.tasks.filter(task => task.Status !== 'Klaar').length;
         this.updateBadge('pending-tasks-count', pendingTasksCount);
         
-        // Update notification count (due items within 3 days)
+        // Update notification count (due items within 3 days + unread mails)
         const currentDate = new Date();
         let dueItemsCount = 0;
         
@@ -519,7 +520,9 @@ class FinancialDashboard {
             }
         });
         
-        this.updateBadge('notification-count', dueItemsCount);
+        // Add unread mail count to total notifications
+        const totalNotifications = dueItemsCount + this.unreadMailCount;
+        this.updateBadge('notification-count', totalNotifications);
         
         // Update new mail count (placeholder - will be updated when mail data is loaded)
         this.updateMailCount();
@@ -540,12 +543,46 @@ class FinancialDashboard {
                 const mailData = await response.json();
                 // Count unread mails (assuming there's a 'read' property)
                 const unreadCount = mailData.filter(mail => !mail.read).length;
+                this.unreadMailCount = unreadCount;
                 this.updateBadge('new-mail-count', unreadCount);
+                
+                // Update the main notification counter to include unread mails
+                this.updateMainNotificationCounter();
             }
         } catch (error) {
             console.log('Mail data not available yet');
+            this.unreadMailCount = 0;
             this.updateBadge('new-mail-count', 0);
+            this.updateMainNotificationCounter();
         }
+    }
+    
+    updateMainNotificationCounter() {
+        // Calculate due items within 3 days
+        const currentDate = new Date();
+        let dueItemsCount = 0;
+        
+        // Count due bills
+        this.data.bills.forEach(bill => {
+            if (bill.Status === 'Onbetaald' && bill.Betaaldatum) {
+                const dueDate = new Date(bill.Betaaldatum);
+                const daysUntilDue = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+                if (daysUntilDue <= 3) dueItemsCount++;
+            }
+        });
+        
+        // Count due tasks
+        this.data.tasks.forEach(task => {
+            if (task.Status !== 'Klaar' && task.Afspraakdatum) {
+                const dueDate = new Date(task.Afspraakdatum);
+                const daysUntilDue = Math.ceil((dueDate - currentDate) / (1000 * 60 * 60 * 24));
+                if (daysUntilDue <= 3) dueItemsCount++;
+            }
+        });
+        
+        // Combine due items and unread mails for total notification count
+        const totalNotifications = dueItemsCount + this.unreadMailCount;
+        this.updateBadge('notification-count', totalNotifications);
     }
 
     async updateDashboard() {
