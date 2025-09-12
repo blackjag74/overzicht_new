@@ -119,7 +119,13 @@ function calculateLeftThisMonth() {
 
 // Function to fetch and display transacties
 function fetchTransacties() {
-    fetch('get_transacties.php')
+    fetch(`get_transacties.php?t=${Date.now()}`, {
+        headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+        }
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

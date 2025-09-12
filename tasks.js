@@ -4,7 +4,13 @@ let originalAfspraakdatum;
 
 // Function to fetch and display tasks
 function fetchTasks() {
-    fetch('get_taken.php')
+    fetch(`get_taken.php?t=${Date.now()}`, {
+        headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+        }
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

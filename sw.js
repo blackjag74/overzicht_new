@@ -1,4 +1,4 @@
-const CACHE_NAME = 'financial-dashboard-v2';
+const CACHE_NAME = 'financial-dashboard-v3';
 const urlsToCache = [
   './',
   './index.html',
@@ -43,6 +43,41 @@ self.addEventListener('install', event => {
 
 // Fetch event - serve from cache when offline
 self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  
+  // Never cache API endpoints - always fetch fresh data
+  if (url.pathname.includes('.php') || 
+      url.pathname.includes('/api/') ||
+      url.pathname.includes('get_rekeningen') ||
+      url.pathname.includes('get_taken') ||
+      url.pathname.includes('get_transacties') ||
+      url.pathname.includes('update_') ||
+      url.pathname.includes('new_')) {
+    
+    // Network-first strategy for API calls with cache-busting
+    event.respondWith(
+      fetch(event.request.url + '?t=' + Date.now(), {
+        method: event.request.method,
+        headers: {
+          ...Object.fromEntries(event.request.headers.entries()),
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
+        body: event.request.body
+      }).catch(err => {
+        console.log('Network request failed, API unavailable:', err);
+        // For API calls, don't serve stale cache - return error
+        return new Response(JSON.stringify({error: 'Network unavailable'}), {
+          status: 503,
+          headers: {'Content-Type': 'application/json'}
+        });
+      })
+    );
+    return;
+  }
+  
+  // Cache-first strategy for static resources
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -51,8 +86,7 @@ self.addEventListener('fetch', event => {
           return response;
         }
         return fetch(event.request);
-      }
-    )
+      })
   );
 });
 

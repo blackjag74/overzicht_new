@@ -554,12 +554,35 @@
                 navigator.serviceWorker.register('./sw.js')
                     .then(registration => {
                         console.log('SW registered successfully: ', registration);
+                        
+                        // Check for updates every time the page loads
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // New service worker is available, force refresh
+                                    console.log('New service worker available, refreshing...');
+                                    window.location.reload();
+                                }
+                            });
+                        });
+                        
+                        // Force update check
+                        registration.update();
                     })
                     .catch(registrationError => {
                         console.log('SW registration failed: ', registrationError);
                         // Fallback: try without service worker
                         console.log('App will work without offline capabilities');
                     });
+            });
+            
+            // Listen for service worker messages
+            navigator.serviceWorker.addEventListener('message', event => {
+                if (event.data && event.data.type === 'CACHE_UPDATED') {
+                    console.log('Cache updated, reloading page...');
+                    window.location.reload();
+                }
             });
         }
         

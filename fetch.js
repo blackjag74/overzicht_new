@@ -8,7 +8,13 @@ function debouncedFetchData(delay = 300) {
 function fetchData() {
     console.log("FUNCTION: fetchData"); // Log when the fetch starts
 
-    fetch('get_rekeningen.php')
+    fetch(`get_rekeningen.php?t=${Date.now()}`, {
+        headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+        }
+    })
         .then(response => {
             console.log("Response received from server."); // Log when the response is received
 

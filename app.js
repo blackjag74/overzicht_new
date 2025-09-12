@@ -299,7 +299,13 @@ class FinancialDashboard {
 
     async loadBills() {
         try {
-            const response = await fetch('get_rekeningen.php');
+            const response = await fetch(`get_rekeningen.php?t=${Date.now()}`, {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -319,7 +325,13 @@ class FinancialDashboard {
 
     async loadTasks() {
         try {
-            const response = await fetch('get_taken.php');
+            const response = await fetch(`get_taken.php?t=${Date.now()}`, {
+                headers: {
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                }
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
