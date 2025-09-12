@@ -744,17 +744,17 @@ class FinancialDashboard {
         container.innerHTML = this.data.bills.map(bill => `
             <tr>
                 <td>
-                    <div class="bill-name-with-actions">
-                        <div class="bill-name">${bill.Rekening}</div>
-                        <div class="action-buttons">
-                            ${bill.Status !== 'Betaald' ? 
-                                `<button class="btn btn-success btn-sm" onclick="app.payBill(${bill.ID || bill.id})" title="Mark as paid"><i class="fas fa-credit-card"></i></button>` : 
-                                `<button class="btn btn-warning btn-sm" onclick="app.unpayBill(${bill.ID || bill.id})" title="Mark as unpaid"><i class="fas fa-undo"></i></button>`
-                            }
-                            <button class="btn btn-secondary btn-sm" onclick="app.editBill(${bill.ID || bill.id})" title="Edit bill"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-danger btn-sm" onclick="app.deleteBill(${bill.ID || bill.id})" title="Delete bill"><i class="fas fa-trash"></i></button>
-                        </div>
+                    <div class="action-buttons">
+                        ${bill.Status !== 'Betaald' ? 
+                            `<button class="btn btn-success btn-sm" onclick="app.payBill(${bill.ID || bill.id})" title="Mark as paid"><i class="fas fa-credit-card"></i></button>` : 
+                            `<button class="btn btn-warning btn-sm" onclick="app.unpayBill(${bill.ID || bill.id})" title="Mark as unpaid"><i class="fas fa-undo"></i></button>`
+                        }
+                        <button class="btn btn-secondary btn-sm" onclick="app.editBill(${bill.ID || bill.id})" title="Edit bill"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="app.deleteBill(${bill.ID || bill.id})" title="Delete bill"><i class="fas fa-trash"></i></button>
                     </div>
+                </td>
+                <td>
+                    <div class="bill-name">${bill.Rekening}</div>
                 </td>
                 <td>${this.formatDate(bill.Volgende)}</td>
                 <td>
@@ -772,18 +772,18 @@ class FinancialDashboard {
 
         container.innerHTML = this.data.tasks.map(task => `
             <tr>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary btn-sm" onclick="app.editTask(${task.ID || task.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="app.deleteTask(${task.ID || task.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
                 <td>${task.Info}</td>
                 <td>${this.formatDate(task.Afspraakdatum)}</td>
                 <td>
                     <span class="status-badge ${task.Status.toLowerCase()}">
                         ${task.Status}
                     </span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="btn btn-secondary btn-sm" onclick="app.editTask(${task.ID || task.id})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="app.deleteTask(${task.ID || task.id})"><i class="fas fa-trash"></i></button>
-                    </div>
                 </td>
             </tr>
         `).join('');
@@ -843,19 +843,6 @@ class FinancialDashboard {
         container.innerHTML = this.data.bills.map((bill, index) => `
             <tr>
                 <td>
-                    <div class="bill-info">
-                        <strong>${bill.Rekening}</strong>
-                        <div class="bill-amount">€${parseFloat(bill.Bedrag || 0).toFixed(2)}</div>
-                    </div>
-                </td>
-                <td>${this.formatDate(bill.Volgende)}</td>
-                <td>
-                    <span class="status-badge ${bill.Status === 'Onbetaald' ? 'unpaid' : 'paid'}">
-                        <i class="fas ${bill.Status === 'Onbetaald' ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
-                        ${bill.Status === 'Onbetaald' ? 'Unpaid' : 'Paid'}
-                    </span>
-                </td>
-                <td>
                     <div class="action-buttons">
                         ${bill.Status === 'Onbetaald' ? 
                             `<button class="btn btn-success btn-sm" onclick="app.payBill('${bill.ID || bill.id || index}')" title="Mark as paid">
@@ -873,6 +860,19 @@ class FinancialDashboard {
                         </button>
                     </div>
                 </td>
+                <td>
+                    <div class="bill-info">
+                        <strong>${bill.Rekening}</strong>
+                        <div class="bill-amount">€${parseFloat(bill.Bedrag || 0).toFixed(2)}</div>
+                    </div>
+                </td>
+                <td>${this.formatDate(bill.Volgende)}</td>
+                <td>
+                    <span class="status-badge ${bill.Status === 'Onbetaald' ? 'unpaid' : 'paid'}">
+                        <i class="fas ${bill.Status === 'Onbetaald' ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
+                        ${bill.Status === 'Onbetaald' ? 'Unpaid' : 'Paid'}
+                    </span>
+                </td>
             </tr>
         `).join('');
     }
@@ -883,18 +883,18 @@ class FinancialDashboard {
 
         container.innerHTML = this.data.tasks.map((task, index) => `
             <tr>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary btn-sm" onclick="app.editTask(${index})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="app.deleteTask(${index})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
                 <td>${task.Info || task.Taaknaam || 'No description'}</td>
                 <td>${this.formatDate(task.Afspraakdatum)}</td>
                 <td>
                     <span class="status-badge ${(task.Status || 'pending').toLowerCase()}">
                         ${task.Status || 'Pending'}
                     </span>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <button class="btn btn-secondary btn-sm" onclick="app.editTask(${index})"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="app.deleteTask(${index})"><i class="fas fa-trash"></i></button>
-                    </div>
                 </td>
             </tr>
         `).join('');
