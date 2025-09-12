@@ -3,12 +3,78 @@
  * Handles mobile-specific features and responsive behavior
  */
 
+// Clear all mobile caches to prevent stale data issues
+async function clearMobileCaches() {
+    try {
+        // Clear service worker caches
+        if ('caches' in window) {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(cacheName => {
+                    console.log('Clearing cache:', cacheName);
+                    return caches.delete(cacheName);
+                })
+            );
+        }
+        
+        // Clear localStorage with mobile-specific keys
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && (key.includes('bills') || key.includes('tasks') || key.includes('transactions') || key.includes('cache'))) {
+                keysToRemove.push(key);
+            }
+        }
+        keysToRemove.forEach(key => localStorage.removeItem(key));
+        
+        // Clear sessionStorage
+        sessionStorage.clear();
+        
+        // Force reload service worker
+        if ('serviceWorker' in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            for (let registration of registrations) {
+                await registration.update();
+            }
+        }
+        
+        // Add cache-busting meta tag for mobile browsers
+        const existingMeta = document.querySelector('meta[http-equiv="Cache-Control"]');
+        if (existingMeta) {
+            existingMeta.remove();
+        }
+        
+        const meta = document.createElement('meta');
+        meta.setAttribute('http-equiv', 'Cache-Control');
+        meta.setAttribute('content', 'no-cache, no-store, must-revalidate, max-age=0');
+        document.head.appendChild(meta);
+        
+        const pragmaMeta = document.createElement('meta');
+        pragmaMeta.setAttribute('http-equiv', 'Pragma');
+        pragmaMeta.setAttribute('content', 'no-cache');
+        document.head.appendChild(pragmaMeta);
+        
+        const expiresMeta = document.createElement('meta');
+        expiresMeta.setAttribute('http-equiv', 'Expires');
+        expiresMeta.setAttribute('content', '0');
+        document.head.appendChild(expiresMeta);
+        
+        console.log('Mobile caches cleared successfully');
+        
+    } catch (error) {
+        console.error('Error clearing mobile caches:', error);
+    }
+}
+
 // Initialize mobile functionality
 function initMobile() {
     // Check if we're on a mobile device
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
+        // Clear all caches on mobile to prevent stale data
+        clearMobileCaches();
+        
         initBottomNavigation();
         createMobileActionButton();
         adjustTableColumnsForMobile();

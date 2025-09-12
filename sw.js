@@ -54,25 +54,64 @@ self.addEventListener('fetch', event => {
       url.pathname.includes('update_') ||
       url.pathname.includes('new_')) {
     
-    // Network-first strategy for API calls with cache-busting
+    // Network-first strategy for API calls with aggressive cache-busting for mobile
     event.respondWith(
-      fetch(event.request.url + '?t=' + Date.now(), {
-        method: event.request.method,
-        headers: {
-          ...Object.fromEntries(event.request.headers.entries()),
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        },
-        body: event.request.body
-      }).catch(err => {
-        console.log('Network request failed, API unavailable:', err);
-        // For API calls, don't serve stale cache - return error
-        return new Response(JSON.stringify({error: 'Network unavailable'}), {
-          status: 503,
-          headers: {'Content-Type': 'application/json'}
-        });
-      })
+      (async () => {
+        try {
+          // Build cache-busting URL
+          const url = new URL(event.request.url);
+          const timestamp = Date.now();
+          const random = Math.random().toString(36).substring(7);
+          
+          // Add multiple cache-busting parameters
+          url.searchParams.set('t', timestamp);
+          url.searchParams.set('r', random);
+          url.searchParams.set('mobile', '1');
+          
+          // Create new request with aggressive headers for mobile browsers
+          const newRequest = new Request(url.toString(), {
+            method: event.request.method,
+            headers: {
+              ...Object.fromEntries(event.request.headers.entries()),
+              'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+              'Pragma': 'no-cache',
+              'Expires': '0',
+              'If-Modified-Since': 'Thu, 01 Jan 1970 00:00:00 GMT',
+              'If-None-Match': '*'
+            },
+            body: event.request.body,
+            mode: event.request.mode,
+            credentials: event.request.credentials,
+            cache: 'no-store'
+          });
+          
+          const response = await fetch(newRequest);
+          
+          // Clone response and add no-cache headers
+          const responseClone = response.clone();
+          const headers = new Headers(responseClone.headers);
+          headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+          headers.set('Pragma', 'no-cache');
+          headers.set('Expires', '0');
+          
+          return new Response(responseClone.body, {
+            status: responseClone.status,
+            statusText: responseClone.statusText,
+            headers: headers
+          });
+          
+        } catch (err) {
+          console.log('Network request failed, API unavailable:', err);
+          // For API calls, don't serve stale cache - return error
+          return new Response(JSON.stringify({error: 'Network unavailable'}), {
+            status: 503,
+            headers: {
+              'Content-Type': 'application/json',
+              'Cache-Control': 'no-cache, no-store, must-revalidate'
+            }
+          });
+        }
+      })()
     );
     return;
   }
