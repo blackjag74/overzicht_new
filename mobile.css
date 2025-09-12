@@ -189,10 +189,20 @@
     }
 
     th, td {
-        padding: 0.5rem 0.25rem;
+        padding: 0.45rem 0.25rem;
         white-space: normal;
         word-wrap: break-word;
         overflow-wrap: break-word;
+        line-height: 1.3;
+        vertical-align: middle;
+    }
+    
+    /* Make bill names uppercase and larger on medium mobile screens */
+    .data-table td:nth-child(2) {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
     }
 
     /* Optimized column widths for mobile */
@@ -222,20 +232,23 @@
 
     .action-buttons {
         display: flex;
-        gap: 0.125rem;
-        flex-wrap: wrap;
+        gap: 0.25rem;
+        flex-wrap: nowrap;
         justify-content: flex-start;
+        align-items: center;
     }
 
     .action-buttons .btn {
-        padding: 0.2rem 0.3rem;
+        padding: 0.25rem 0.4rem;
         font-size: 0.7rem;
-        min-width: 28px;
-        height: 28px;
+        min-width: 32px;
+        height: 32px;
         border-radius: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
+        touch-action: manipulation;
     }
     
     /* Hide button text on mobile, show only icons */
@@ -466,27 +479,38 @@
     /* Make table more compact */
     .data-table th,
     .data-table td {
-        padding: 0.5rem 0.25rem;
-        font-size: 0.875rem;
+        padding: 0.4rem 0.25rem;
+        font-size: 0.8rem;
+        line-height: 1.3;
+        vertical-align: middle;
+    }
+    
+    /* Ensure minimum touch target size for buttons */
+    .data-table .action-buttons .btn {
+        min-height: 32px;
+        min-width: 32px;
+        touch-action: manipulation;
     }
 
     /* Ultra-compact action buttons for very small screens */
     .action-buttons {
         display: flex;
-        gap: 0.1rem;
-        flex-wrap: wrap;
+        gap: 0.15rem;
+        flex-wrap: nowrap;
         justify-content: flex-start;
+        align-items: center;
     }
 
     .action-buttons .btn {
-        padding: 0.15rem 0.2rem;
+        padding: 0.2rem 0.3rem;
         font-size: 0.65rem;
-        min-width: 24px;
-        height: 24px;
-        border-radius: 3px;
+        min-width: 28px;
+        height: 28px;
+        border-radius: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
     }
     
     /* Ensure only icons are shown on very small screens */
@@ -563,11 +587,23 @@
     .bill-name {
         width: 100%;
         margin-bottom: 0.25rem;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
     }
 
     .bill-name-with-actions .action-buttons {
         width: 100%;
         justify-content: flex-start;
+    }
+    
+    /* Make bill names in table cells uppercase and larger */
+    .data-table td:nth-child(2) {
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
     }
 
     /* Stack form elements */
