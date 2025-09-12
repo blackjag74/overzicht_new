@@ -1516,14 +1516,25 @@ class FinancialDashboard {
             });
 
             if (response.ok) {
-                const result = await response.json();
-                if (result.success) {
+                const responseText = await response.text();
+                try {
+                    const result = JSON.parse(responseText);
+                    if (result.success) {
+                        this.showToast('Task deleted successfully', 'success');
+                        await this.loadTasks();
+                        await this.updateStats();
+                    } else {
+                        this.showToast(result.message || 'Error deleting task', 'error');
+                    }
+                } catch (jsonError) {
+                    console.error('Invalid JSON response:', responseText);
+                    // If JSON parsing fails but HTTP status is OK, assume deletion worked
                     this.showToast('Task deleted successfully', 'success');
                     await this.loadTasks();
                     await this.updateStats();
-                } else {
-                    this.showToast(result.message || 'Error deleting task', 'error');
                 }
+            } else {
+                this.showToast(`Server error: ${response.status} ${response.statusText}`, 'error');
             }
         } catch (error) {
             console.error('Error deleting task:', error);
