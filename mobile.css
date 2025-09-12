@@ -214,14 +214,15 @@
     /* Optimized column widths for mobile */
     .data-table th:first-child,
     .data-table td:first-child {
-        width: 25%; /* Actions column */
-        min-width: 80px;
+        width: 30%; /* Actions column - increased */
+        min-width: 90px;
     }
     
     .data-table th:nth-child(2),
     .data-table td:nth-child(2) {
-        width: 40%; /* Bill name column */
-        min-width: 120px;
+        width: 35%; /* Bill name column - reduced */
+        min-width: 100px;
+        padding-right: 0.5rem; /* Add right padding for spacing */
     }
     
     .data-table th:nth-child(3),
@@ -238,23 +239,26 @@
 
     .action-buttons {
         display: flex;
-        gap: 0.25rem;
+        gap: 0.2rem;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-items: center;
+        max-width: 100%;
+        overflow: hidden;
     }
 
     .action-buttons .btn {
-        padding: 0.25rem 0.4rem;
-        font-size: 0.7rem;
-        min-width: 32px;
-        height: 32px;
-        border-radius: 4px;
+        padding: 0.2rem 0.3rem;
+        font-size: 0.65rem;
+        min-width: 28px;
+        height: 28px;
+        border-radius: 3px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
         touch-action: manipulation;
+        margin-right: 0.1rem;
     }
     
     /* Hide button text on mobile, show only icons */
@@ -450,14 +454,15 @@
     /* Optimized column widths for very small screens */
     .data-table th:first-child,
     .data-table td:first-child {
-        width: 20%; /* Actions column - smaller */
-        min-width: 60px;
+        width: 32%; /* Actions column - increased for buttons */
+        min-width: 85px;
     }
     
     .data-table th:nth-child(2),
     .data-table td:nth-child(2) {
-        width: 45%; /* Bill name column - larger */
-        min-width: 100px;
+        width: 38%; /* Bill name column - balanced */
+        min-width: 90px;
+        padding-right: 0.5rem; /* Add spacing */
     }
     
     .data-table th:nth-child(3),
@@ -468,8 +473,8 @@
     
     .data-table th:nth-child(4),
     .data-table td:nth-child(4) {
-        width: 10%; /* Status column */
-        min-width: 50px;
+        width: 5%; /* Status column - hidden on small screens anyway */
+        min-width: 30px;
     }
 
     th, td {
