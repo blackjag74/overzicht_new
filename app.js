@@ -794,7 +794,10 @@ class FinancialDashboard {
                 <td>
                     <div class="bill-name">${bill.Rekening}</div>
                 </td>
-                <td>${this.formatDate(bill.Volgende)}</td>
+                <td>
+                    <div>${this.formatDate(bill.Volgende)}</div>
+                    ${this.formatDaysRemaining(bill.Volgende)}
+                </td>
                 <td>
                     <span class="status-badge unpaid">
                         <i class="fas fa-exclamation-triangle"></i>
@@ -848,7 +851,10 @@ class FinancialDashboard {
                 <td>
                     <div class="bill-name">${bill.Rekening}</div>
                 </td>
-                <td>${this.formatDate(bill.Volgende)}</td>
+                <td>
+                    <div>${this.formatDate(bill.Volgende)}</div>
+                    ${this.formatDaysRemaining(bill.Volgende)}
+                </td>
                 <td>
                     <span class="status-badge paid">
                         <i class="fas fa-check-circle"></i>
@@ -1550,6 +1556,42 @@ class FinancialDashboard {
             style: 'currency',
             currency: 'EUR'
         }).format(amount);
+    }
+
+    // Calculate days remaining until due date with color coding
+    formatDaysRemaining(dateString) {
+        if (!dateString) return '';
+        
+        const dueDate = new Date(dateString);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        dueDate.setHours(0, 0, 0, 0);
+        
+        const diffTime = dueDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        let text, colorClass;
+        
+        if (diffDays < 0) {
+            // Past due
+            const daysPast = Math.abs(diffDays);
+            text = `${daysPast} day${daysPast === 1 ? '' : 's'} overdue`;
+            colorClass = 'days-overdue';
+        } else if (diffDays === 0) {
+            // Due today
+            text = 'Due today';
+            colorClass = 'days-today';
+        } else if (diffDays <= 7) {
+            // Due within a week
+            text = `${diffDays} day${diffDays === 1 ? '' : 's'} left`;
+            colorClass = 'days-soon';
+        } else {
+            // Due in the future
+            text = `${diffDays} day${diffDays === 1 ? '' : 's'} left`;
+            colorClass = 'days-future';
+        }
+        
+        return `<div class="days-remaining ${colorClass}">(${text})</div>`;
     }
 
     // Toast notifications
