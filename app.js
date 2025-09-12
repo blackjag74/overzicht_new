@@ -737,20 +737,35 @@ class FinancialDashboard {
         trendsContainer.innerHTML = trendsHtml;
     }
 
+    // Version Control: v2.0 - Split bills table into separate paid/unpaid tables
+    // Replaced single renderBillsTable() with renderUnpaidBillsTable() and renderPaidBillsTable()
     renderBillsTable() {
-        const container = document.getElementById('bills-table-body');
+        // Call both separate rendering functions
+        this.renderUnpaidBillsTable();
+        this.renderPaidBillsTable();
+    }
+
+    renderUnpaidBillsTable() {
+        const container = document.getElementById('unpaid-bills-table-body');
         if (!container) return;
 
-        container.innerHTML = this.data.bills.map(bill => `
+        const unpaidBills = this.data.bills.filter(bill => 
+            bill.Status !== 'Betaald' && bill.Status !== 'Paid'
+        );
+
+        container.innerHTML = unpaidBills.map(bill => `
             <tr>
                 <td>
                     <div class="action-buttons">
-                        ${bill.Status !== 'Betaald' ? 
-                            `<button class="btn btn-success btn-sm" onclick="app.payBill(${bill.ID || bill.id})" title="Mark as paid"><i class="fas fa-credit-card"></i></button>` : 
-                            `<button class="btn btn-warning btn-sm" onclick="app.unpayBill(${bill.ID || bill.id})" title="Mark as unpaid"><i class="fas fa-undo"></i></button>`
-                        }
-                        <button class="btn btn-secondary btn-sm" onclick="app.editBill(${bill.ID || bill.id})" title="Edit bill"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-danger btn-sm" onclick="app.deleteBill(${bill.ID || bill.id})" title="Delete bill"><i class="fas fa-trash"></i></button>
+                        <button class="btn btn-success btn-sm" onclick="app.payBill(${bill.ID || bill.id})" title="Mark as paid">
+                            <i class="fas fa-credit-card"></i>
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="app.editBill(${bill.ID || bill.id})" title="Edit bill">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="app.deleteBill(${bill.ID || bill.id})" title="Delete bill">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 </td>
                 <td>
@@ -758,12 +773,74 @@ class FinancialDashboard {
                 </td>
                 <td>${this.formatDate(bill.Volgende)}</td>
                 <td>
-                    <span class="status-badge ${bill.Status === 'Betaald' ? 'paid' : 'unpaid'}">
+                    <span class="status-badge unpaid">
+                        <i class="fas fa-exclamation-triangle"></i>
                         ${bill.Status || 'Unpaid'}
                     </span>
                 </td>
             </tr>
         `).join('');
+
+        // Show message if no unpaid bills
+        if (unpaidBills.length === 0) {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 2rem; color: #10b981;">
+                        <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <div>All bills are paid!</div>
+                    </td>
+                </tr>
+            `;
+        }
+    }
+
+    renderPaidBillsTable() {
+        const container = document.getElementById('paid-bills-table-body');
+        if (!container) return;
+
+        const paidBills = this.data.bills.filter(bill => 
+            bill.Status === 'Betaald' || bill.Status === 'Paid'
+        );
+
+        container.innerHTML = paidBills.map(bill => `
+            <tr>
+                <td>
+                    <div class="action-buttons">
+                        <button class="btn btn-warning btn-sm" onclick="app.unpayBill(${bill.ID || bill.id})" title="Mark as unpaid">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="app.editBill(${bill.ID || bill.id})" title="Edit bill">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="app.deleteBill(${bill.ID || bill.id})" title="Delete bill">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="bill-name">${bill.Rekening}</div>
+                </td>
+                <td>${this.formatDate(bill.Volgende)}</td>
+                <td>
+                    <span class="status-badge paid">
+                        <i class="fas fa-check-circle"></i>
+                        ${bill.Status}
+                    </span>
+                </td>
+            </tr>
+        `).join('');
+
+        // Show message if no paid bills
+        if (paidBills.length === 0) {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 2rem; color: #9ca3af;">
+                        <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                        <div>No paid bills yet</div>
+                    </td>
+                </tr>
+            `;
+        }
     }
 
     renderTasksTable() {
@@ -1213,6 +1290,8 @@ class FinancialDashboard {
     }
 
     // Bill Actions
+    // Version Control: v2.0 - Updated to work with separate paid/unpaid tables
+    // Function remains unchanged but now triggers renderBillsTable() which updates both tables
     async payBill(billId) {
         if (!confirm('Mark this bill as paid?')) return;
 
@@ -1241,6 +1320,8 @@ class FinancialDashboard {
         }
     }
 
+    // Version Control: v2.0 - Updated to work with separate paid/unpaid tables
+    // Function remains unchanged but now triggers renderBillsTable() which updates both tables
     async unpayBill(billId) {
         if (!confirm('Are you sure you want to mark this bill as unpaid?')) return;
 
@@ -1280,6 +1361,8 @@ class FinancialDashboard {
         }
     }
 
+    // Version Control: v2.0 - Compatible with separate paid/unpaid tables
+    // Function remains unchanged, works with both table structures
     async editBill(billId) {
         const bill = this.data.bills.find(b => b.ID == billId || b.id == billId);
         if (!bill) {
@@ -1298,6 +1381,8 @@ class FinancialDashboard {
         this.showModal('edit-bill-modal');
     }
 
+    // Version Control: v2.0 - Updated to work with separate paid/unpaid tables
+    // Function remains unchanged but now triggers renderBillsTable() which updates both tables
     async deleteBill(billId) {
         if (!confirm('Are you sure you want to delete this bill?')) return;
 

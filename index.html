@@ -254,9 +254,18 @@
                         </div>
                     </div>
                     
+                    <!-- Version Control: v2.0 - Added separate tables for paid/unpaid bills -->
+                    <!-- Previous version: Single table with ID 'bills-table' and 'bills-table-body' -->
+                    <!-- Current version: Two separate tables for better organization and user experience -->
+                    <!-- Changes: Added section headings, separate table IDs, improved visual hierarchy -->
+                    <!-- Unpaid Bills Section -->
                     <div class="content-card">
+                        <h3 style="color: #ef4444; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Unpaid Bills
+                        </h3>
                         <div class="table-container">
-                            <table id="bills-table" class="data-table">
+                            <table id="unpaid-bills-table" class="data-table">
                                 <thead>
                                     <tr>
                                         <th>Actions</th>
@@ -265,8 +274,31 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="bills-table-body">
-                                    <!-- Bills data will be loaded here -->
+                                <tbody id="unpaid-bills-table-body">
+                                    <!-- Unpaid bills data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Paid Bills Section -->
+                    <div class="content-card" style="margin-top: 2rem;">
+                        <h3 style="color: #10b981; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-check-circle"></i>
+                            Paid Bills
+                        </h3>
+                        <div class="table-container">
+                            <table id="paid-bills-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Actions</th>
+                                        <th>Bill</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paid-bills-table-body">
+                                    <!-- Paid bills data will be loaded here -->
                                 </tbody>
                             </table>
                         </div>
