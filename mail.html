@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Viewer</title>
+  <style>
+    #email-header {
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    #email-header div {
+      margin-bottom: 10px;
+    }
+  </style>
+  </style>
+</head>
+<body>
+  <h1>Email Viewer</h1>
+  <button id="get-emails-button">Get Emails</button>
+  <div id="email-content"></div>
+
+  <script>
+    document.getElementById('get-emails-button').addEventListener('click', () => {
+      fetch('get_mail.php') // URL to the PHP script
+        .then((response) => response.json())
+        .then((emails) => {
+          const emailContentDiv = document.getElementById('email-content');
+          emailContentDiv.innerHTML = ''; // Clear previous content
+
+          if (emails.error) {
+            emailContentDiv.innerHTML = `<p>Error: ${emails.error}</p>`;
+            return;
+          }
+
+          if (emails.message) {
+            emailContentDiv.innerHTML = `<p>${emails.message}</p>`;
+            return;
+          }
+
+          emails.forEach((email, index) => {
+            const emailDiv = document.createElement('div');
+            emailDiv.classList.add('email');
+            emailDiv.innerHTML = `
+              <h3>${email.subject}</h3>
+              <p><strong>From:</strong> ${email.from}</p>
+              <p><strong>Date:</strong> ${email.date}</p>
+              <p>${email.body}</p>
+            `;
+            emailContentDiv.appendChild(emailDiv);
+          });
+        })
+        .catch((error) => {
+          console.error('Error fetching emails:', error);
+        });
+    });
+  </script>
+</body>
+</html>

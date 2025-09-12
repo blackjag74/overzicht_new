@@ -1,0 +1,24 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="20" cy="20" r="18" fill="url(#gradient)" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Money/Finance icon -->
+  <path d="M20 8C15.6 8 12 11.6 12 16C12 20.4 15.6 24 20 24C24.4 24 28 20.4 28 16C28 11.6 24.4 8 20 8ZM20 22C16.7 22 14 19.3 14 16C14 12.7 16.7 10 20 10C23.3 10 26 12.7 26 16C26 19.3 23.3 22 20 22Z" fill="#ffffff"/>
+  
+  <!-- Dollar sign -->
+  <path d="M20 12V14M20 18V20M18 16H22M18 16C18 14.9 18.9 14 20 14C21.1 14 22 14.9 22 16C22 17.1 21.1 18 20 18C18.9 18 18 17.1 18 16Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Chart/Graph elements -->
+  <rect x="12" y="26" width="3" height="6" fill="#10b981" rx="1"/>
+  <rect x="17" y="24" width="3" height="8" fill="#2563eb" rx="1"/>
+  <rect x="22" y="28" width="3" height="4" fill="#f97316" rx="1"/>
+  <rect x="27" y="25" width="3" height="7" fill="#ef4444" rx="1"/>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

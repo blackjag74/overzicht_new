@@ -1,0 +1,49 @@
+{
+  "RegularAccounts": [
+    {
+      "ID": "1",
+      "Rekening": "Electricity Bill",
+      "Bedrag": "125.50",
+      "Betaaldatum": "2024-01-15",
+      "Volgende": "2024-02-15",
+      "Info": "Monthly electricity payment",
+      "Status": "pending"
+    },
+    {
+      "ID": "2",
+      "Rekening": "Internet Service",
+      "Bedrag": "89.99",
+      "Betaaldatum": "2024-01-10",
+      "Volgende": "2024-02-10",
+      "Info": "Fiber internet subscription",
+      "Status": "paid"
+    },
+    {
+      "ID": "3",
+      "Rekening": "Water Bill",
+      "Bedrag": "67.25",
+      "Betaaldatum": "2024-01-20",
+      "Volgende": "2024-02-20",
+      "Info": "Monthly water usage",
+      "Status": "pending"
+    },
+    {
+      "ID": "4",
+      "Rekening": "Phone Bill",
+      "Bedrag": "45.00",
+      "Betaaldatum": "2024-01-05",
+      "Volgende": "2024-02-05",
+      "Info": "Mobile phone plan",
+      "Status": "paid"
+    },
+    {
+      "ID": "5",
+      "Rekening": "Insurance Premium",
+      "Bedrag": "234.75",
+      "Betaaldatum": "2024-01-01",
+      "Volgende": "2024-02-01",
+      "Info": "Home insurance monthly premium",
+      "Status": "overdue"
+    }
+  ]
+}

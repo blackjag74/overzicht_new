@@ -1,0 +1,39 @@
+{
+  "Taken": [
+    {
+      "ID": "1",
+      "Taak": "Review monthly budget",
+      "Afspraakdatum": "2024-01-25",
+      "Info": "Analyze spending patterns and adjust budget categories",
+      "Status": "pending"
+    },
+    {
+      "ID": "2",
+      "Taak": "Update insurance policy",
+      "Afspraakdatum": "2024-01-30",
+      "Info": "Contact insurance agent to review coverage options",
+      "Status": "in_progress"
+    },
+    {
+      "ID": "3",
+      "Taak": "File tax documents",
+      "Afspraakdatum": "2024-02-15",
+      "Info": "Organize and submit annual tax return",
+      "Status": "pending"
+    },
+    {
+      "ID": "4",
+      "Taak": "Set up automatic payments",
+      "Afspraakdatum": "2024-01-28",
+      "Info": "Configure auto-pay for recurring bills",
+      "Status": "completed"
+    },
+    {
+      "ID": "5",
+      "Taak": "Investment portfolio review",
+      "Afspraakdatum": "2024-02-10",
+      "Info": "Meet with financial advisor to review investment performance",
+      "Status": "pending"
+    }
+  ]
+}

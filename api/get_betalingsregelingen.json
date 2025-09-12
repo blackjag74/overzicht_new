@@ -1,0 +1,24 @@
+{
+  "Betalingsregelingen": [
+    {
+      "ID": "1",
+      "Rekening": "Credit Card Payment Plan",
+      "Bedrag": "150.00",
+      "Startdatum": "2024-01-01",
+      "Einddatum": "2024-06-01",
+      "Maandelijks": "25.00",
+      "Status": "active",
+      "Info": "Monthly payment arrangement for credit card debt"
+    },
+    {
+      "ID": "2",
+      "Rekening": "Medical Bills",
+      "Bedrag": "500.00",
+      "Startdatum": "2024-01-15",
+      "Einddatum": "2024-12-15",
+      "Maandelijks": "45.45",
+      "Status": "active",
+      "Info": "Payment plan for medical expenses"
+    }
+  ]
+}

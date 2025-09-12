@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Format Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .invalid { background-color: #ffebee; }
+        .valid { background-color: #e8f5e8; }
+    </style>
+</head>
+<body>
+    <h1>Date Format Test</h1>
+    <p>Testing formatDate function with various date values:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Input Value</th>
+                <th>Formatted Output</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="testResults">
+        </tbody>
+    </table>
+
+    <script>
+        // Copy the formatDate function from app.js
+        function formatDate(dateString) {
+            if (!dateString || dateString.trim() === '') {
+                return 'N/A';
+            }
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) {
+                return 'N/A';
+            }
+            return date.toLocaleDateString('nl-NL');
+        }
+
+        // Test cases
+        const testCases = [
+            { input: '2025-01-15', description: 'Valid date' },
+            { input: '', description: 'Empty string' },
+            { input: null, description: 'Null value' },
+            { input: undefined, description: 'Undefined value' },
+            { input: 'invalid-date', description: 'Invalid date string' },
+            { input: '2025-13-45', description: 'Invalid date values' },
+            { input: '2025-01-01', description: 'Valid date 2' },
+            { input: '   ', description: 'Whitespace only' },
+            { input: 'N/A', description: 'N/A string' }
+        ];
+
+        // Run tests
+        const tbody = document.getElementById('testResults');
+        testCases.forEach(testCase => {
+            const row = document.createElement('tr');
+            const result = formatDate(testCase.input);
+            const isValid = result !== 'N/A' && result !== 'Invalid Date';
+            
+            row.className = isValid ? 'valid' : 'invalid';
+            row.innerHTML = `
+                <td>${testCase.description} (${JSON.stringify(testCase.input)})</td>
+                <td>${result}</td>
+                <td>${isValid ? 'PASS' : 'HANDLED'}</td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        // Test with sample bill data
+        const sampleBills = [
+            { Rekening: 'Test Bill 1', Volgende: '2025-01-15' },
+            { Rekening: 'Test Bill 2', Volgende: '' },
+            { Rekening: 'Test Bill 3', Volgende: null },
+            { Rekening: 'Test Bill 4', Volgende: 'invalid' }
+        ];
+
+        console.log('Sample bill date formatting:');
+        sampleBills.forEach(bill => {
+            console.log(`${bill.Rekening}: ${formatDate(bill.Volgende)}`);
+        });
+    </script>
+</body>
+</html>

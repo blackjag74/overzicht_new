@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Financial Dashboard</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Mobile financial dashboard for managing bills and tasks">
+    <meta name="theme-color" content="#4facfe">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FinDash">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Icons -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="apple-touch-icon" href="icon-192.svg">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mobile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Overzicht</span>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-section">
+                    <h3>Main</h3>
+                    <ul>
+                        <li class="nav-item active" data-page="dashboard">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </li>
+                        <li class="nav-item" data-page="bills">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Bills</span>
+                            <span class="badge" id="unpaid-bills-count">0</span>
+                        </li>
+                        <li class="nav-item" data-page="tasks">
+                            <i class="fas fa-tasks"></i>
+                            <span>Tasks</span>
+                            <span class="badge" id="pending-tasks-count">0</span>
+                        </li>
+                        <li class="nav-item" data-page="transactions">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transactions</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li class="nav-item" data-page="calendar">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Calendar</span>
+                        </li>
+                        <li class="nav-item" data-page="mail">
+                            <i class="fas fa-envelope"></i>
+                            <span>Mail</span>
+                            <span class="badge" id="new-mail-count">0</span>
+                        </li>
+                        <li class="nav-item" data-page="reports">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reports</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3>Settings</h3>
+                    <ul>
+                        <li class="nav-item" data-page="settings">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search..." id="global-search">
+                    </div>
+                    
+                    <div class="header-actions">
+                        <button class="action-btn" id="add-new-btn">
+                            <i class="fas fa-plus"></i>
+                            <span>Add New</span>
+                        </button>
+                        
+                        <div class="notifications-dropdown">
+                            <button class="notification-btn" id="notifications-btn">
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-badge" id="notification-count">0</span>
+                            </button>
+                        </div>
+                        
+                        <div class="user-menu">
+                            <button class="user-btn">
+                                <i class="fas fa-user-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page active">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-euro-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-unpaid-amount">€0.00</h3>
+                                <p>Total Unpaid</p>
+                                <span class="stat-change negative">+€120 from last month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="due-this-month">€0.00</h3>
+                                <p>Due This Month</p>
+                                <span class="stat-change positive">-€50 from last month</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="pending-tasks-stat">0</h3>
+                                <p>Pending Tasks</p>
+                                <span class="stat-change neutral">Same as last week</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="completed-this-month">0</h3>
+                                <p>Completed This Month</p>
+                                <span class="stat-change positive">+5 from last month</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Widgets -->
+                    <div class="dashboard-widgets">
+                        <div class="widget">
+                            <div class="widget-header">
+                                <h3>Recent Bills</h3>
+                                <button class="widget-action" onclick="showPage('bills')">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </button>
+                            </div>
+                            <div class="widget-content" id="recent-bills-widget">
+                                <!-- Recent bills will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <div class="widget">
+                            <div class="widget-header">
+                                <h3>Upcoming Tasks</h3>
+                                <button class="widget-action" onclick="showPage('tasks')">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </button>
+                            </div>
+                            <div class="widget-content" id="upcoming-tasks-widget">
+                                <!-- Upcoming tasks will be loaded here -->
+                            </div>
+                        </div>
+                        
+                        <div class="widget">
+                            <div class="widget-header">
+                                <h3>Monthly Overview</h3>
+                                <button class="widget-action">
+                                    <i class="fas fa-chart-line"></i>
+                                </button>
+                            </div>
+                            <div class="widget-content">
+                                <!-- Monthly overview will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-overview">
+                        <div class="chart-section">
+                            <div class="chart-container">
+                                <h3><i class="fas fa-chart-pie"></i> Expense Categories</h3>
+                                <p>Expense breakdown will be displayed here.</p>
+                            </div>
+                        </div>
+                        <div class="chart-section">
+                            <div class="chart-container">
+                                <h3><i class="fas fa-trending-up"></i> Monthly Trends</h3>
+                                <p>Monthly trends data will be displayed here.</p>
+                            </div>
+                        </div>
+                        <div class="recent-activity">
+                            <h3><i class="fas fa-clock"></i> Recent Activity</h3>
+                            <div id="recent-activity-list">
+                                <!-- Recent activity items will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bills Page -->
+                <div id="bills-page" class="page">
+                    <div class="page-header">
+                        <h2>Bills Management</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" id="add-bill-btn">
+                                <i class="fas fa-plus"></i>
+                                Add Bill
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <div class="table-container">
+                            <table id="bills-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Bill</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bills-table-body">
+                                    <!-- Bills data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tasks Page -->
+                <div id="tasks-page" class="page">
+                    <div class="page-header">
+                        <h2>Tasks Management</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" id="add-task-btn">
+                                <i class="fas fa-plus"></i>
+                                Add Task
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card">
+                        <div class="table-container">
+                            <table id="tasks-table" class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Task Info</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tasks-table-body">
+                                    <!-- Tasks data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Other pages will be added here -->
+                <div id="transactions-page" class="page">
+                    <div class="page-header">
+                        <h2>Transaction History</h2>
+                    </div>
+                    <div class="content-card">
+                        <div id="transactions-content">
+                            <!-- Transactions will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="calendar-page" class="page">
+                    <div class="page-header">
+                        <h2>Calendar View</h2>
+                    </div>
+                    <div class="content-card">
+                        <div id="calendar-content">
+                            <!-- Calendar will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="mail-page" class="page">
+                    <div class="page-header">
+                        <h2>Mail Center</h2>
+                    </div>
+                    <div class="content-card">
+                        <div id="mail-content">
+                            <!-- Mail content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="reports-page" class="page">
+                    <div class="page-header">
+                        <h2>Reports & Analytics</h2>
+                    </div>
+                    <div class="content-card">
+                        <div id="reports-content">
+                            <!-- Reports will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="settings-page" class="page">
+                    <div class="page-header">
+                        <h2>Settings</h2>
+                    </div>
+                    <div class="content-card">
+                        <div id="settings-content">
+                            <!-- Settings will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal" id="add-bill-modal">
+            <div class="modal-header">
+                <h3>Add New Bill</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-bill-form">
+                    <div class="form-group">
+                        <label for="bill-name">Bill Name</label>
+                        <input type="text" id="bill-name" name="rekening" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bill-amount">Amount</label>
+                        <input type="number" id="bill-amount" name="bedrag" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bill-due-date">Due Date</label>
+                        <input type="date" id="bill-due-date" name="volgende" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bill-period">Period</label>
+                        <select id="bill-period" name="periode">
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="yearly">Yearly</option>
+                            <option value="one-time">One Time</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bill-url">URL (Optional)</label>
+                        <input type="url" id="bill-url" name="url">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" form="add-bill-form" class="btn btn-primary">Add Bill</button>
+            </div>
+        </div>
+        
+        <div class="modal" id="add-task-modal">
+            <div class="modal-header">
+                <h3>Add New Task</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-task-form">
+                    <div class="form-group">
+                        <label for="task-name">Task Name</label>
+                        <input type="text" id="task-name" name="taaknaam" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-due-date">Due Date</label>
+                        <input type="date" id="task-due-date" name="afspraakdatum" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-info">Additional Info</label>
+                        <textarea id="task-info" name="info" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" form="add-task-form" class="btn btn-primary">Add Task</button>
+            </div>
+        </div>
+        
+        <div class="modal" id="edit-bill-modal">
+            <div class="modal-header">
+                <h3>Edit Bill</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-bill-form">
+                    <input type="hidden" id="edit-bill-id">
+                    <div class="form-group">
+                        <label for="edit-bill-name">Bill Name</label>
+                        <input type="text" id="edit-bill-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-bill-amount">Amount</label>
+                        <input type="number" id="edit-bill-amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-bill-due-date">Due Date</label>
+                        <input type="date" id="edit-bill-due-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-bill-period">Period</label>
+                        <select id="edit-bill-period">
+                            <option value="monthly">Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="yearly">Yearly</option>
+                            <option value="one-time">One Time</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-bill-url">URL (Optional)</label>
+                        <input type="url" id="edit-bill-url">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" form="edit-bill-form" class="btn btn-primary">Update Bill</button>
+            </div>
+        </div>
+        
+        <div class="modal" id="edit-task-modal">
+            <div class="modal-header">
+                <h3>Edit Task</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-task-form">
+                    <input type="hidden" id="edit-task-id">
+                    <div class="form-group">
+                        <label for="edit-task-info">Task Info</label>
+                        <input type="text" id="edit-task-info" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-task-due-date">Due Date</label>
+                        <input type="date" id="edit-task-due-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-task-status">Status</label>
+                        <select id="edit-task-status">
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" form="edit-task-form" class="btn btn-primary">Update Task</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script src="display.js"></script>
+    <script src="mobile.js"></script>
+    
+    <!-- PWA Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Use relative path for service worker
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('SW registered successfully: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                        // Fallback: try without service worker
+                        console.log('App will work without offline capabilities');
+                    });
+            });
+        }
+        
+        // PWA Install Prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Don't prevent default immediately - store the event
+            deferredPrompt = e;
+            console.log('PWA install prompt available');
+            
+            // Show install button or banner
+            const installBtn = document.getElementById('install-btn');
+            if (installBtn) {
+                installBtn.style.display = 'block';
+                installBtn.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted the install prompt');
+                            } else {
+                                console.log('User dismissed the install prompt');
+                            }
+                            deferredPrompt = null;
+                            installBtn.style.display = 'none';
+                        });
+                    }
+                });
+            } else {
+                // Create install button if it doesn't exist
+                console.log('Install button not found, PWA install available but no UI');
+            }
+        });
+        
+        // Handle app installed event
+        window.addEventListener('appinstalled', (e) => {
+            console.log('PWA was installed successfully');
+            deferredPrompt = null;
+            const installBtn = document.getElementById('install-btn');
+            if (installBtn) {
+                installBtn.style.display = 'none';
+            }
+        });
+    </script>
+
+    <!-- Floating Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-container">
+            <a href="#" class="bottom-nav-item active" data-page="dashboard">
+                <div class="bottom-nav-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="bottom-nav-label">Home</div>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="bills">
+                <div class="bottom-nav-icon">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div class="bottom-nav-label">Bills</div>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="tasks">
+                <div class="bottom-nav-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="bottom-nav-label">Tasks</div>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="reports">
+                <div class="bottom-nav-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="bottom-nav-label">Reports</div>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="settings">
+                <div class="bottom-nav-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <div class="bottom-nav-label">Settings</div>
+            </a>
+        </div>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe Gesture Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #333;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .action-buttons button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        /* Swipe gesture styles */
+        .swipe-active {
+            transition: transform 0.1s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .swipe-left {
+            background: linear-gradient(90deg, transparent 0%, rgba(220, 53, 69, 0.2) 100%);
+        }
+        
+        .swipe-right {
+            background: linear-gradient(90deg, rgba(40, 167, 69, 0.2) 0%, transparent 100%);
+        }
+        
+        .swipe-left::after {
+            content: '🗑️ Delete';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #dc3545;
+            font-weight: bold;
+            font-size: 14px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        
+        .swipe-right::after {
+            content: '✏️ Edit';
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #28a745;
+            font-weight: bold;
+            font-size: 14px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        
+        tbody tr {
+            position: relative;
+            touch-action: pan-y;
+        }
+        
+        .swipe-active * {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        .instructions {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>Swipe Gesture Test</h2>
+        <p><strong>Instructions:</strong></p>
+        <ul>
+            <li>Swipe <strong>RIGHT</strong> on a table row to <strong>EDIT</strong></li>
+            <li>Swipe <strong>LEFT</strong> on a table row to <strong>DELETE</strong></li>
+            <li>Works on both touch devices and desktop (mouse drag)</li>
+        </ul>
+    </div>
+    
+    <h3>Bills (Unpaid)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Bill</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="unpaid-rekeningen-table-body">
+            <tr>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick="showDeleteRekeningModal(0)" style="background-color: red; color: white;">X</button>
+                        <button onclick="editRekening(0, {})" style="background-color: blue; color: white;">E</button>
+                    </div>
+                </td>
+                <td>Electricity Bill</td>
+                <td>€150</td>
+                <td>2024-01-15</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick="showDeleteRekeningModal(1)" style="background-color: red; color: white;">X</button>
+                        <button onclick="editRekening(1, {})" style="background-color: blue; color: white;">E</button>
+                    </div>
+                </td>
+                <td>Internet Bill</td>
+                <td>€45</td>
+                <td>2024-01-20</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>Tasks</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Task</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+        <tbody id="taken-table-body">
+            <tr>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick="editTask(0, {})" style="background-color: blue; color: white;">E</button>
+                        <button onclick="showDeleteTaskModal(0)" style="background-color: red; color: white;">X</button>
+                    </div>
+                </td>
+                <td>Pay electricity bill</td>
+                <td>2024-01-15</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="action-buttons">
+                        <button onclick="editTask(1, {})" style="background-color: blue; color: white;">E</button>
+                        <button onclick="showDeleteTaskModal(1)" style="background-color: red; color: white;">X</button>
+                    </div>
+                </td>
+                <td>Review monthly budget</td>
+                <td>2024-01-25</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div id="result" style="margin-top: 20px; padding: 10px; background-color: #333; border-radius: 5px;">
+        <strong>Action Results:</strong>
+        <div id="action-log"></div>
+    </div>
+    
+    <script>
+        // Mock functions to test swipe actions
+        function editRekening(index, item) {
+            document.getElementById('action-log').innerHTML += `<div>✏️ Edit Bill ${index} triggered</div>`;
+        }
+        
+        function showDeleteRekeningModal(index) {
+            document.getElementById('action-log').innerHTML += `<div>🗑️ Delete Bill ${index} triggered</div>`;
+        }
+        
+        function editTask(index, item) {
+            document.getElementById('action-log').innerHTML += `<div>✏️ Edit Task ${index} triggered</div>`;
+        }
+        
+        function showDeleteTaskModal(index) {
+            document.getElementById('action-log').innerHTML += `<div>🗑️ Delete Task ${index} triggered</div>`;
+        }
+    </script>
+    
+    <script src="swipe-gestures.js"></script>
+</body>
+</html>

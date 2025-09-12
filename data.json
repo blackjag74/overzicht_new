@@ -1,0 +1,175 @@
+{
+  "Rekeningen": [
+    {
+      "Rekening": "Boetes",
+      "Periode": "Openstaand",
+      "Betaaldatum": "2024-11-30",
+      "Status": "Onbetaald",
+      "Bedrag": 207.3,
+      "VorigeBetaaldatum": "2024-11-30",
+      "URL": "https://www.belastingdienst.nl/wps/wcm/connect/nl/betalenenontvangen/content/boetes"
+    },
+    {
+      "Rekening": "Energie (Betalingsregeling)",
+      "Periode": "Betalingsregeling",
+      "Betaaldatum": "2024-11-28",
+      "Status": "Betaald",
+      "Bedrag": 68,
+      "VorigeBetaaldatum": "2024-12-28",
+      "URL": "https://www.oxxio.nl/mijn-oxxio/notas/betalingsregeling/"
+    },
+    {
+      "Rekening": "Energie",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-25",
+      "Status": "Betaald",
+      "Bedrag": 172,
+      "VorigeBetaaldatum": "2024-12-25",
+      "URL": "https://www.oxxio.nl/mijn-oxxio/notas/"
+    },
+    {
+      "Rekening": "Internet",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-25",
+      "Status": "Betaald",
+      "Bedrag": 54,
+      "VorigeBetaaldatum": "2024-12-25",
+      "URL": "https://mijn.kpn.com/#/overzicht"
+    },
+    {
+      "Rekening": "Mobiel",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-25",
+      "Status": "Betaald",
+      "Bedrag": 68,
+      "VorigeBetaaldatum": "2024-12-25",
+      "URL": "https://odido.nl"
+    },
+    {
+      "Rekening": "Zorgverzekering",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-24",
+      "Status": "Betaald",
+      "Bedrag": 280,
+      "VorigeBetaaldatum": "2024-12-24",
+      "URL": "https://mijn.cz.nl"
+    },
+    {
+      "Rekening": "Belastingdienst Toeslagen (Betalingsregeling)",
+      "Periode": "Betalingsregeling",
+      "Betaaldatum": "2024-11-24",
+      "Status": "Betaald",
+      "Bedrag": 100,
+      "VorigeBetaaldatum": "2024-12-24",
+      "URL": "https://www.belastingdienst.nl/wps/wcm/connect/nl/betalenenontvangen/content/overzicht-betalen-en-ontvangen"
+    },
+    {
+      "Rekening": "Voorschool",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-22",
+      "Status": "Betaald",
+      "Bedrag": 700,
+      "VorigeBetaaldatum": "2024-12-22",
+      "URL": "https://mail.google.com/mail/u/0/#advanced-search/from=dynamo&subject=Openstaande&subset=all&has=1&within=1d&sizeoperator=s_sl&sizeunit=s_smb&query=from%3Adynamo+1"
+    },
+    {
+      "Rekening": "Easypark",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-16",
+      "Status": "Betaald",
+      "Bedrag": 0,
+      "VorigeBetaaldatum": "2024-12-16",
+      "URL": "https://www.easypark.nl"
+    },
+    {
+      "Rekening": "Huur (Betalingsregeling)",
+      "Periode": "Betalingsregeling",
+      "Betaaldatum": "2024-11-14",
+      "Status": "Betaald",
+      "Bedrag": 150,
+      "VorigeBetaaldatum": "2024-12-14",
+      "URL": "https://www.stadgenoot.nl/mijn-stadgenoot/geldzaken/rekeningoverzicht"
+    },
+    {
+      "Rekening": "Huur",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-14",
+      "Status": "Betaald",
+      "Bedrag": 1182,
+      "VorigeBetaaldatum": "2024-12-14",
+      "URL": "https://www.stadgenoot.nl/mijn-stadgenoot/geldzaken/rekeningoverzicht"
+    },
+    {
+      "Rekening": "Autoverzekering",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-11-11",
+      "Status": "Betaald",
+      "Bedrag": 48.11,
+      "VorigeBetaaldatum": "2024-12-11",
+      "URL": "https://www.verzekeringen.nl/autoverzekering"
+    },
+    {
+      "Rekening": "ANWB",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-10-24",
+      "Status": "Betaald",
+      "Bedrag": 12.1,
+      "VorigeBetaaldatum": "2024-11-24",
+      "URL": "https://www.anwb.nl/lidmaatschap"
+    },
+    {
+      "Rekening": "Yellowbrick",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "2024-10-16",
+      "Status": "Betaald",
+      "Bedrag": 0,
+      "VorigeBetaaldatum": "2024-11-16",
+      "URL": "https://www.yellowbrick.nl"
+    },
+    {
+      "Rekening": "Drinkwater",
+      "Periode": "Kwartaalijks",
+      "Betaaldatum": "2024-09-01",
+      "Status": "Betaald",
+      "Bedrag": 132,
+      "VorigeBetaaldatum": "2024-12-01",
+      "URL": "https://www.waternet.nl/mijn-waternet/?dw-redirect=%2fmijn-waternet%2fdrinkwater%2f"
+    },
+    {
+      "Rekening": "Parkeervergunning",
+      "Periode": "Half jaarlijks",
+      "Betaaldatum": "2024-09-01",
+      "Status": "Betaald",
+      "Bedrag": 0,
+      "VorigeBetaaldatum": "2025-03-01",
+      "URL": "https://www.amsterdam.nl/parkeren-verkeer/parkeervergunning/"
+    },
+    {
+      "Rekening": "Zorgverzekering (Betalingsregeling)",
+      "Periode": "Betalingsregeling",
+      "Betaaldatum": "",
+      "Status": "Onbetaald",
+      "Bedrag": 55,
+      "VorigeBetaaldatum": "2025-01-06",
+      "URL": "https://mijn.cz.nl/Betalingsregeling"
+    },
+    {
+      "Rekening": "Auto belasting",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "",
+      "Status": "Onbetaald",
+      "Bedrag": 0,
+      "VorigeBetaaldatum": "2025-01-06",
+      "URL": "https://www.belastingdienst.nl/wps/wcm/connect/nl/belasting/auto-belasting"
+    },
+    {
+      "Rekening": "Lidmaatschap Moskee",
+      "Periode": "Maandelijks",
+      "Betaaldatum": "",
+      "Status": "Onbetaald",
+      "Bedrag": 0,
+      "VorigeBetaaldatum": "2025-01-06",
+      "URL": "https://www.moskeekabir.nl"
+    }
+  ]
+}

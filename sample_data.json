@@ -1,0 +1,59 @@
+{
+  "RegularAccounts": [
+    {
+      "id": 1,
+      "Rekening": "Oxxio",
+      "Bedrag": "125.50",
+      "Betaaldatum": "2024-12-20",
+      "Status": "Onbetaald",
+      "Periode": "M",
+      "Volgende": "2024-12-25",
+      "URL": "https://oxxio.nl",
+      "Kenmerk": "Energy bill"
+    },
+    {
+      "id": 2,
+      "Rekening": "KPN",
+      "Bedrag": "45.99",
+      "Betaaldatum": "2024-12-15",
+      "Status": "Betaald",
+      "Periode": "M",
+      "Volgende": "2025-01-15",
+      "URL": "https://kpn.com",
+      "Kenmerk": "Internet"
+    },
+    {
+      "id": 3,
+      "Rekening": "Huur",
+      "Bedrag": "850.00",
+      "Betaaldatum": "2024-12-01",
+      "Status": "Onbetaald",
+      "Periode": "M",
+      "Volgende": "2025-01-02",
+      "URL": "#",
+      "Kenmerk": "Monthly rent"
+    },
+    {
+      "id": 4,
+      "Rekening": "CZV",
+      "Bedrag": "156.75",
+      "Betaaldatum": "2024-12-10",
+      "Status": "Betaald",
+      "Periode": "M",
+      "Volgende": "2025-01-10",
+      "URL": "https://czv.nl",
+      "Kenmerk": "Health insurance"
+    },
+    {
+      "id": 5,
+      "Rekening": "Auto belasting",
+      "Bedrag": "89.50",
+      "Betaaldatum": "2024-12-25",
+      "Status": "Onbetaald",
+      "Periode": "K",
+      "Volgende": "2025-03-25",
+      "URL": "https://belastingdienst.nl",
+      "Kenmerk": "Car tax"
+    }
+  ]
+}

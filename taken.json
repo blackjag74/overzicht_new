@@ -1,0 +1,110 @@
+[
+    {
+        "Taaknaam": "Laya prik",
+        "Afspraakdatum": "0000-00-00",
+        "Status": "Open",
+        "info": ""
+    },
+    {
+        "Taaknaam": "Brandstofkosten",
+        "Afspraakdatum": "2025-01-04",
+        "Status": "Open",
+        "info": "Declareren"
+    },
+    {
+        "Taaknaam": "Revolut",
+        "Afspraakdatum": "2025-01-04",
+        "Status": "Open",
+        "info": "ID importeren"
+    },
+    {
+        "Taaknaam": "ASR verzekering",
+        "Afspraakdatum": "2025-01-04",
+        "Status": "Open",
+        "info": "Assia moet account aanmaken op\nhttps:\/\/www.asr.nl"
+    },
+    {
+        "Taaknaam": "Bericht Youforce",
+        "Afspraakdatum": "2025-01-04",
+        "Status": "Open",
+        "info": "Opzoeken voor Assia"
+    },
+    {
+        "Taaknaam": "Koran lessen",
+        "Afspraakdatum": "2025-01-05",
+        "Status": "Open",
+        "info": "Musa inschrijven Moskee Kabir"
+    },
+    {
+        "Taaknaam": "Mohamed naar school",
+        "Afspraakdatum": "2025-01-06",
+        "Status": "Open",
+        "info": "Zie brief, formulier moet ingevuld worden door de school"
+    },
+    {
+        "Taaknaam": "Woensdagen in ramadan",
+        "Afspraakdatum": "2025-01-06",
+        "Status": "Completed",
+        "info": "5 en 12 maart assia vrij \n19 en 26 maart ikzelf vrij"
+    },
+    {
+        "Taaknaam": "Paspoort Musa",
+        "Afspraakdatum": "2025-01-07",
+        "Status": "Open",
+        "info": "Ophalen bij bevestiging van Gemeente"
+    },
+    {
+        "Taaknaam": "Rijbewijs",
+        "Afspraakdatum": "2025-01-09",
+        "Status": "Open",
+        "info": "Ophalen bij bevestiging van Gemeente"
+    },
+    {
+        "Taaknaam": "Laya: Tandarts",
+        "Afspraakdatum": "2025-01-14",
+        "Status": "Pending",
+        "info": "L. Benali (08-07-2022)\nafspraakherinnering:\ndi 14 jan 11:00\nJeugdtand Stephensonstraat 35\n\nNo reply, wijzigen uitsluitend via tel.020-6166332"
+    },
+    {
+        "Taaknaam": "Afspraak dokter",
+        "Afspraakdatum": "2025-01-14",
+        "Status": "Pending",
+        "info": "Om 09:00"
+    },
+    {
+        "Taaknaam": "GGD Mohamed",
+        "Afspraakdatum": "2025-01-16",
+        "Status": "Pending",
+        "info": "16\/01 11:20 13 januari 13:10 een afspraak op Pontanusstraat 278. \ntel. nr: 020 5555961 "
+    },
+    {
+        "Taaknaam": "Studiedag",
+        "Afspraakdatum": "2025-01-29",
+        "Status": "Planned",
+        "info": "Kinderen vrij"
+    },
+    {
+        "Taaknaam": "Suikerfeest vrij",
+        "Afspraakdatum": "2025-03-31",
+        "Status": "Pending",
+        "info": "Gevraagd"
+    },
+    {
+        "Taaknaam": "Voetbal",
+        "Afspraakdatum": "2025-04-01",
+        "Status": "Planned",
+        "info": "Open dag"
+    },
+    {
+        "Taaknaam": "Opdracht Assia",
+        "Afspraakdatum": "2025-04-01",
+        "Status": "Open",
+        "info": "https:\/\/mijn.variva.nl"
+    },
+    {
+        "Taaknaam": "Neuroloog Musa",
+        "Afspraakdatum": "2025-06-01",
+        "Status": "Planned",
+        "info": "OLVG oost stuurt afspraakbevestiging"
+    }
+]
